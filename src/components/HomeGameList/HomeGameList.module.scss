@@ -1,6 +1,5 @@
 .homeGameList {
   width: 100%;
-  height: 100%;
 
   .filterButtonsContainer {
     display: flex;
@@ -24,6 +23,25 @@
 
     &.active {
       color: var(--primary-color);
+    }
+  }
+
+  .container {
+    width: calc(100% - 2rem);
+    padding: 1rem;
+  }
+
+  .gameListContainer {
+    display: flex;
+    gap: 3.3%;
+    flex-wrap: wrap;
+
+    .gameListContainerItem {
+      width: 31%;
+
+      img {
+        width: 100%;
+      }
     }
   }
 }

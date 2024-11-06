@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./HomeGameList.module.scss";
 import Button from "src/components/Button";
+import LoadingComponent from "src/components/LoadingComponent";
 import SearchIcon from "src/assets/search.svg?react";
 import FireIcon from "src/assets/fire-svgrepo-com 1.svg?react";
 import NewIcon from "src/assets/NEW.svg?react";
@@ -10,8 +11,14 @@ import { useHomePageState } from "src/contexts/HomePageContext";
 import { GameCategory } from "src/types/game";
 
 const HomeGameList: React.FC = () => {
-  const { selectedCategory, setSelectedCategory, isSearching, setIsSearching } =
-    useHomePageState();
+  const {
+    selectedCategory,
+    setSelectedCategory,
+    isLoading,
+    isSearching,
+    setIsSearching,
+    filteredGames,
+  } = useHomePageState();
 
   const categories = [
     {
@@ -76,6 +83,26 @@ const HomeGameList: React.FC = () => {
             {category.text}
           </Button>
         ))}
+      </div>
+
+      <div className={styles.container}>
+        {isSearching ? (
+          <div>Game Search </div>
+        ) : (
+          <>
+            {isLoading ? (
+              <LoadingComponent />
+            ) : (
+              <div className={styles.gameListContainer}>
+                {filteredGames.map((game, index) => (
+                  <div className={styles.gameListContainerItem} key={index}>
+                    <img src={game.imgSrc} />
+                  </div>
+                ))}
+              </div>
+            )}
+          </>
+        )}
       </div>
     </div>
   );

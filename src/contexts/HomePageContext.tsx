@@ -4,13 +4,16 @@ import React, {
   ReactNode,
   useMemo,
   useContext,
+  useEffect,
 } from "react";
+import { fetchGames } from "src/services/gameService";
 import { GameCategory, GameData } from "src/types/game";
 
 interface HomePageState {
   isLoading: boolean;
   games: GameData[];
   isSearching: boolean;
+  error: string | null;
   filteredGames: GameData[];
   selectedCategory: GameCategory;
   setGames: (games: GameData[]) => void;
@@ -25,6 +28,7 @@ export const HomePageProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
   const [games, setGames] = useState<GameData[]>([]);
   const [isSearching, setIsSearching] = useState<boolean>(false);
   const [selectedCategory, setSelectedCategory] = useState<GameCategory>(
@@ -36,6 +40,24 @@ export const HomePageProvider: React.FC<{ children: ReactNode }> = ({
     });
   }, [games, selectedCategory]);
 
+  useEffect(() => {
+    const loadGames = async () => {
+      try {
+        const gamesData = await fetchGames({ category: selectedCategory });
+        setGames(gamesData as GameData[]);
+      } catch {
+        setError("Failed to fetch games");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    setIsLoading(true);
+    loadGames().catch((err: unknown) => {
+      console.log("Unknown error occured", { err });
+    });
+  }, [selectedCategory]);
+
   return (
     <HomePageContext.Provider
       value={{
@@ -43,6 +65,7 @@ export const HomePageProvider: React.FC<{ children: ReactNode }> = ({
         setIsLoading,
         isSearching,
         setIsSearching,
+        error,
         games,
         setGames,
         filteredGames,
