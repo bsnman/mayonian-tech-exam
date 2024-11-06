@@ -1,0 +1,16 @@
+.homeCarousel {
+  .carouselItem {
+    width: 100%;
+  }
+
+  .carouselItemImage {
+    width: 100%;
+  }
+
+  .carouselItemText {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary-color);
+  }
+}

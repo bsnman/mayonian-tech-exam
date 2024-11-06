@@ -1,13 +1,14 @@
+import { RouterProvider } from "react-router-dom";
 import "./App.scss";
 import Header from "./components/Header/Header";
-import Home from "src/pages/Home";
+import router from "src/router";
 
 function App() {
   return (
     <div className="App">
       <Header />
       <div className="page-content">
-        <Home />
+        <RouterProvider router={router} />
       </div>
     </div>
   );

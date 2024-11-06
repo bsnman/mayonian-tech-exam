@@ -2,7 +2,6 @@
   padding: 0.25rem 1rem;
   background-color: transparent;
   font-size: 01rem;
-  color: #fff;
   border: none;
   border-radius: 4px;
   cursor: pointer;
@@ -10,5 +9,9 @@
   &:disabled {
     background-color: #ccc;
     cursor: not-allowed;
+  }
+
+  &:focus {
+    outline: none;
   }
 }
