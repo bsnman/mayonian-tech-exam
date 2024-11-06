@@ -10,6 +10,7 @@ import JackpotIcon from "src/assets/jackpots.svg?react";
 import { useHomePageState } from "src/contexts/HomePageContext";
 import { GameCategory } from "src/types/game";
 import GameSearch from "src/components/GameSearch";
+import GameGallery from "src/components/GameGallery";
 
 const HomeGameList: React.FC = () => {
   const {
@@ -93,17 +94,7 @@ const HomeGameList: React.FC = () => {
           <GameSearch />
         ) : (
           <>
-            {isLoading ? (
-              <LoadingComponent />
-            ) : (
-              <div className={styles.gameListContainer}>
-                {games.map((game, index) => (
-                  <div className={styles.gameListContainerItem} key={index}>
-                    <img src={game.imgSrc} />
-                  </div>
-                ))}
-              </div>
-            )}
+            {isLoading ? <LoadingComponent /> : <GameGallery games={games} />}
           </>
         )}
       </div>

@@ -1,0 +1,26 @@
+.gameListContainer {
+  display: flex;
+  gap: 3.3%;
+  flex-wrap: wrap;
+
+  .gameListContainerItem {
+    position: relative;
+    width: 31%;
+
+    img {
+      width: 100%;
+    }
+
+    .faveIcon {
+      color: #888;
+      position: absolute;
+      padding: 0.25rem;
+      right: 4px;
+      top: 4px;
+
+      .favorite {
+        color: #ffd807;
+      }
+    }
+  }
+}

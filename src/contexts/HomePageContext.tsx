@@ -6,7 +6,7 @@ import React, {
   useEffect,
   useCallback,
 } from "react";
-import { fetchGames } from "src/services/gameService";
+import { fetchGames, toggleGameFavorite } from "src/services/gameService";
 import { GameCategory, GameData } from "src/types/game";
 
 interface LoadGamesProps {
@@ -25,6 +25,7 @@ interface HomePageState {
   setIsSearching: (loading: boolean) => void;
   setSelectedCategory: (category: GameCategory) => void;
   loadGames: (props: LoadGamesProps) => Promise<void>;
+  toggleFavorite: (gameId: number) => Promise<void>;
 }
 
 const HomePageContext = createContext<HomePageState | undefined>(undefined);
@@ -58,6 +59,34 @@ export const HomePageProvider: React.FC<{ children: ReactNode }> = ({
     []
   );
 
+  const toggleFavorite = async (gameId: number) => {
+    const currentGame = games.find((game) => game.id === gameId);
+
+    if (currentGame === undefined) {
+      throw new Error("Game not found");
+    }
+
+    const isFavorite = currentGame.favorite;
+    setGames((prevState) => {
+      const gameIndex = prevState.findIndex((game) => game.id === gameId);
+
+      if (gameIndex !== -1) {
+        const updatedGames = [
+          ...prevState.slice(0, gameIndex),
+          {
+            ...prevState[gameIndex],
+            favorite: !isFavorite,
+          },
+          ...prevState.slice(gameIndex + 1),
+        ];
+        return updatedGames;
+      }
+
+      return prevState;
+    });
+    await toggleGameFavorite({ gameId });
+  };
+
   useEffect(() => {
     if (!isSearching) {
       loadGames({ category: selectedCategory }).catch((err: unknown) => {
@@ -79,6 +108,7 @@ export const HomePageProvider: React.FC<{ children: ReactNode }> = ({
         setGames,
         selectedCategory,
         setSelectedCategory,
+        toggleFavorite,
       }}
     >
       {children}

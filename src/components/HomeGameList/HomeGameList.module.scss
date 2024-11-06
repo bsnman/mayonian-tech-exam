@@ -30,18 +30,4 @@
     width: calc(100% - 2rem);
     padding: 1rem;
   }
-
-  .gameListContainer {
-    display: flex;
-    gap: 3.3%;
-    flex-wrap: wrap;
-
-    .gameListContainerItem {
-      width: 31%;
-
-      img {
-        width: 100%;
-      }
-    }
-  }
 }

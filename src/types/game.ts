@@ -7,7 +7,9 @@ export enum GameCategory {
 }
 
 export interface GameData {
+  id: number;
   name: string;
   imgSrc: string;
   category: GameCategory;
+  favorite: boolean;
 }

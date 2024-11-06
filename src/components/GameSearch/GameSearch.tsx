@@ -5,6 +5,7 @@ import SearchIcon from "src/assets/search.svg?react";
 import SearchListIcon from "src/assets/search_list.svg?react";
 import { useHomePageState } from "src/contexts/HomePageContext";
 import LoadingComponent from "src/components/LoadingComponent";
+import GameGallery from "../GameGallery";
 
 const GameSearch: React.FC = () => {
   const { loadGames, games, isLoading } = useHomePageState();
@@ -52,17 +53,7 @@ const GameSearch: React.FC = () => {
         </Button>
       </div>
       <div className={styles.container}>
-        {isLoading ? (
-          <LoadingComponent />
-        ) : (
-          <div className={styles.gameListContainer}>
-            {games.map((game, index) => (
-              <div className={styles.gameListContainerItem} key={index}>
-                <img src={game.imgSrc} />
-              </div>
-            ))}
-          </div>
-        )}
+        {isLoading ? <LoadingComponent /> : <GameGallery games={games} />}
       </div>
     </div>
   );
