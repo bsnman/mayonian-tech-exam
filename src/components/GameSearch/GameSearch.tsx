@@ -6,9 +6,11 @@ import SearchListIcon from "src/assets/search_list.svg?react";
 import { useHomePageState } from "src/contexts/HomePageContext";
 import LoadingComponent from "src/components/LoadingComponent";
 import GameGallery from "../GameGallery";
+import { useGameProviderState } from "src/contexts/GameProviderContext";
 
 const GameSearch: React.FC = () => {
   const { loadGames, games, isLoading } = useHomePageState();
+  const { setIsOpen } = useGameProviderState();
   const [invalidSearcKey, setInvalidSearchKey] = useState<boolean>(false);
 
   const [searchKey, setSearchKey] = useState<string>("");
@@ -33,7 +35,7 @@ const GameSearch: React.FC = () => {
   };
 
   const onFilterGameProvider = () => {
-    console.log("open game provider list");
+    setIsOpen(true);
   };
 
   return (

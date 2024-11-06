@@ -12,4 +12,11 @@ export interface GameData {
   imgSrc: string;
   category: GameCategory;
   favorite: boolean;
+  gameProviderId: number;
+}
+
+export interface GameProvider {
+  id: number;
+  name: string;
+  imgSrc: string;
 }

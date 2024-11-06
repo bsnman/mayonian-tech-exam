@@ -11,6 +11,7 @@ import { useHomePageState } from "src/contexts/HomePageContext";
 import { GameCategory } from "src/types/game";
 import GameSearch from "src/components/GameSearch";
 import GameGallery from "src/components/GameGallery";
+import { useGameProviderState } from "src/contexts/GameProviderContext";
 
 const HomeGameList: React.FC = () => {
   const {
@@ -22,6 +23,8 @@ const HomeGameList: React.FC = () => {
     games,
     setGames,
   } = useHomePageState();
+
+  const gameProviderState = useGameProviderState();
 
   const categories = [
     {
@@ -89,7 +92,9 @@ const HomeGameList: React.FC = () => {
         ))}
       </div>
 
-      <div className={styles.container}>
+      <div
+        className={`${styles.container} ${gameProviderState.isOpen && styles.gameProviderOpen}`}
+      >
         {isSearching ? (
           <GameSearch />
         ) : (

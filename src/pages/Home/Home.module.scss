@@ -1,6 +1,40 @@
 .home {
+  display: flex;
+  flex-direction: column;
   width: 100%;
   max-width: 600px;
   height: 100%;
   margin: 0 auto;
+
+  .gameProviderContainer {
+    opacity: 0;
+    display: none;
+    overflow-y: auto;
+
+    .backDrop {
+      position: fixed;
+      top: 0px;
+      left: 0px;
+      right: 0px;
+      height: 60vh;
+      background-color: #00000055;
+    }
+
+    .gameProviderList {
+      position: relative;
+      z-index: 5;
+      background-color: white;
+      height: 100%;
+    }
+  }
+
+  .show {
+    opacity: 1;
+    display: block;
+  }
+
+  .hide {
+    opacity: 0;
+    display: none;
+  }
 }

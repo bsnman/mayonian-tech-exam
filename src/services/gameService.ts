@@ -3,6 +3,7 @@ import { GameCategory, GameData } from "src/types/game";
 interface FetchGameProps {
   category?: GameCategory;
   searchKey?: string;
+  gameProviderId?: number;
 }
 
 const games: GameData[] = [
@@ -12,6 +13,7 @@ const games: GameData[] = [
     imgSrc: "/assets/games/Group 70.webp",
     category: GameCategory.START,
     favorite: false,
+    gameProviderId: 1,
   },
   {
     id: 2,
@@ -19,6 +21,7 @@ const games: GameData[] = [
     imgSrc: "/assets/games/Group 75.webp",
     category: GameCategory.START,
     favorite: false,
+    gameProviderId: 2,
   },
   {
     id: 3,
@@ -26,6 +29,7 @@ const games: GameData[] = [
     imgSrc: "/assets/games/Group 72.webp",
     category: GameCategory.START,
     favorite: false,
+    gameProviderId: 3,
   },
   {
     id: 4,
@@ -33,6 +37,7 @@ const games: GameData[] = [
     imgSrc: "/assets/games/Group 83.webp",
     category: GameCategory.START,
     favorite: false,
+    gameProviderId: 4,
   },
   {
     id: 5,
@@ -40,6 +45,7 @@ const games: GameData[] = [
     imgSrc: "/assets/games/Group 84.webp",
     category: GameCategory.START,
     favorite: false,
+    gameProviderId: 5,
   },
   {
     id: 6,
@@ -47,6 +53,7 @@ const games: GameData[] = [
     imgSrc: "/assets/games/Group 85.webp",
     category: GameCategory.START,
     favorite: false,
+    gameProviderId: 6,
   },
   {
     id: 7,
@@ -54,6 +61,7 @@ const games: GameData[] = [
     imgSrc: "/assets/games/Group 85.webp",
     category: GameCategory.START,
     favorite: false,
+    gameProviderId: 7,
   },
   {
     id: 8,
@@ -61,6 +69,7 @@ const games: GameData[] = [
     imgSrc: "/assets/games/Group 86.webp",
     category: GameCategory.JACKPOTS,
     favorite: false,
+    gameProviderId: 8,
   },
   {
     id: 9,
@@ -68,6 +77,7 @@ const games: GameData[] = [
     imgSrc: "/assets/games/Group 87.webp",
     category: GameCategory.JACKPOTS,
     favorite: false,
+    gameProviderId: 9,
   },
   {
     id: 10,
@@ -75,6 +85,7 @@ const games: GameData[] = [
     imgSrc: "/assets/games/Group 88.webp",
     category: GameCategory.SLOTS,
     favorite: false,
+    gameProviderId: 10,
   },
   {
     id: 11,
@@ -82,6 +93,7 @@ const games: GameData[] = [
     imgSrc: "/assets/games/Group 94.webp",
     category: GameCategory.JACKPOTS,
     favorite: false,
+    gameProviderId: 11,
   },
   {
     id: 12,
@@ -89,6 +101,7 @@ const games: GameData[] = [
     imgSrc: "/assets/games/sw_ijp.webp.webp",
     category: GameCategory.JACKPOTS,
     favorite: false,
+    gameProviderId: 12,
   },
   {
     id: 13,
@@ -96,10 +109,15 @@ const games: GameData[] = [
     imgSrc: "/assets/games/sw_ijp.webp.webp",
     category: GameCategory.LIVE,
     favorite: false,
+    gameProviderId: 13,
   },
 ];
 
-export const fetchGames = async ({ category, searchKey }: FetchGameProps) => {
+export const fetchGames = async ({
+  category,
+  searchKey,
+  gameProviderId,
+}: FetchGameProps) => {
   let filteredGames = games;
   if (category) {
     filteredGames = filteredGames.filter((game) => game.category === category);
@@ -107,6 +125,11 @@ export const fetchGames = async ({ category, searchKey }: FetchGameProps) => {
   if (searchKey) {
     filteredGames = filteredGames.filter((game) =>
       game.name.toLowerCase().includes(searchKey.toLowerCase())
+    );
+  }
+  if (gameProviderId) {
+    filteredGames = filteredGames.filter(
+      (game) => game.gameProviderId === gameProviderId
     );
   }
 
