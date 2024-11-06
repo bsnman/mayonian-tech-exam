@@ -4,6 +4,7 @@ import React, {
   ReactNode,
   useContext,
   useEffect,
+  useMemo,
 } from "react";
 import { fetchGameProviders } from "src/services/gameProviderService";
 import { GameProvider } from "src/types/game";
@@ -16,7 +17,8 @@ interface HomePageState {
   error: string | null;
   gameProviders: GameProvider[];
   selectedGameProviderId: number | null;
-  setSelectedGameProviderId: (gameProviderId: number) => void;
+  selectedGame: GameProvider | undefined;
+  setSelectedGameProviderId: (gameProviderId: number | null) => void;
 }
 
 const GameProviderContext = createContext<HomePageState | undefined>(undefined);
@@ -31,6 +33,14 @@ export const GameProviderProvider: React.FC<{ children: ReactNode }> = ({
   const [selectedGameProviderId, setSelectedGameProviderId] = useState<
     number | null
   >(null);
+
+  const selectedGame = useMemo(
+    () =>
+      gameProviders.find(
+        (gameProvider) => gameProvider.id === selectedGameProviderId
+      ),
+    [gameProviders, selectedGameProviderId]
+  );
 
   useEffect(() => {
     const loadGameProviders = async () => {
@@ -60,6 +70,7 @@ export const GameProviderProvider: React.FC<{ children: ReactNode }> = ({
         error,
         gameProviders,
         selectedGameProviderId,
+        selectedGame,
         setSelectedGameProviderId,
       }}
     >

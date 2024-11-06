@@ -5,9 +5,16 @@ import CloseIcon from "src/assets/close.svg?react";
 import SearchListIcon from "src/assets/search_list.svg?react";
 import Button from "../Button";
 import { useGameProviderState } from "src/contexts/GameProviderContext";
+import { GameProvider } from "src/types/game";
 
-const GameProvider: React.FC = () => {
-  const { gameProviders, setIsOpen } = useGameProviderState();
+const GameProviderComponent: React.FC = () => {
+  const { gameProviders, setIsOpen, setSelectedGameProviderId } =
+    useGameProviderState();
+
+  const onSelectGameProvider = (gameProvider: GameProvider) => {
+    setSelectedGameProviderId(gameProvider.id);
+    setIsOpen(false);
+  };
 
   return (
     <div className={styles.gameProvider}>
@@ -26,7 +33,11 @@ const GameProvider: React.FC = () => {
 
       <div className={styles.gameProviderList}>
         {gameProviders.map((gameProvider) => (
-          <div className={styles.gameProviderItem} key={gameProvider.id}>
+          <div
+            className={styles.gameProviderItem}
+            key={gameProvider.id}
+            onClick={() => onSelectGameProvider(gameProvider)}
+          >
             <img title={gameProvider.name} src={gameProvider.imgSrc} />
           </div>
         ))}
@@ -35,4 +46,4 @@ const GameProvider: React.FC = () => {
   );
 };
 
-export default GameProvider;
+export default GameProviderComponent;

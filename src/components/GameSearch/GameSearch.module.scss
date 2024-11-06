@@ -66,6 +66,17 @@
     }
   }
 
+  .gamesByContainer {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: space-between;
+
+    .closeIcon {
+      width: 14px;
+      height: 14px;
+    }
+  }
+
   .container {
     width: 100%;
     padding: 1rem 0rem;

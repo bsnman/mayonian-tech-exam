@@ -12,6 +12,7 @@ import { GameCategory, GameData } from "src/types/game";
 interface LoadGamesProps {
   searchKey?: string;
   category?: GameCategory;
+  gameProviderId?: number | null;
 }
 
 interface HomePageState {
@@ -42,12 +43,13 @@ export const HomePageProvider: React.FC<{ children: ReactNode }> = ({
   );
 
   const loadGames = useCallback(
-    async ({ searchKey, category }: LoadGamesProps) => {
+    async ({ searchKey, category, gameProviderId }: LoadGamesProps) => {
       setIsLoading(true);
       try {
         const gamesData = await fetchGames({
           category: category,
           searchKey: searchKey,
+          gameProviderId: gameProviderId,
         });
         setGames(gamesData as GameData[]);
       } catch {

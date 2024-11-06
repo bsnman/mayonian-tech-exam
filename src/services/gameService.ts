@@ -3,7 +3,7 @@ import { GameCategory, GameData } from "src/types/game";
 interface FetchGameProps {
   category?: GameCategory;
   searchKey?: string;
-  gameProviderId?: number;
+  gameProviderId?: number | null;
 }
 
 const games: GameData[] = [
