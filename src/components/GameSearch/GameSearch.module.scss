@@ -11,6 +11,10 @@
     margin-left: -2rem;
     background-color: transparent;
 
+    @media (prefers-color-scheme: dark) {
+      color: #fff;
+    }
+
     &:focus {
       outline: 1px solid var(--primary-color);
     }
