@@ -8,6 +8,7 @@ import {
   useGameProviderState,
 } from "src/contexts/GameProviderContext";
 import GameProvider from "src/components/GameProvider";
+import HomeBottomBar from "src/components/HomeBottomBar";
 
 const HomePage: React.FC = () => {
   const { isOpen } = useGameProviderState();
@@ -25,6 +26,8 @@ const HomePage: React.FC = () => {
         </div>
         <div className={styles.backDrop}></div>
       </div>
+
+      <HomeBottomBar />
     </div>
   );
 };
