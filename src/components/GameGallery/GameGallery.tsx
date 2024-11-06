@@ -16,7 +16,11 @@ const GameGallery: React.FC<GameGalleryProps> = ({ games }) => {
     void toggleFavorite(game.id);
   };
 
-  return (
+  return games.length === 0 ? (
+    <div className={styles.noGames}>
+      <div>No Games</div>
+    </div>
+  ) : (
     <div className={styles.gameListContainer}>
       {games.map((game) => (
         <div className={styles.gameListContainerItem} key={game.id}>
