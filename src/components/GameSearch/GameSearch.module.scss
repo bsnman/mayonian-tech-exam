@@ -1,3 +1,83 @@
 .gameSearch {
   width: 100%;
+
+  .inputText {
+    font-size: 1rem;
+    color: #333;
+    padding: 0.375rem 0.75rem 0.375rem 1.75rem;
+    border-radius: 0.25rem;
+    border: 1px solid #aaa;
+    flex-grow: 1;
+    margin-left: -2rem;
+    background-color: transparent;
+
+    &:focus {
+      outline: 1px solid var(--primary-color);
+    }
+    &:active {
+      outline: 1px solid var(--primary-color);
+    }
+
+    &.invalid {
+      outline: 1px solid red;
+    }
+  }
+
+  .inputSearchBox {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.5rem;
+
+    &:focus-within {
+      .searchIconInput {
+        color: var(--primary-color);
+        &.invalid {
+          color: red;
+        }
+      }
+    }
+  }
+
+  .searchIconInput {
+    color: #aaa;
+    margin-top: 7px;
+    margin-left: 0.4rem;
+    width: 18px;
+    height: 18px;
+
+    &.invalid {
+      color: red;
+    }
+  }
+
+  .searchBtn {
+    padding: 0.25rem;
+    border: 1px solid #aaa;
+    height: 32px;
+    color: #888;
+
+    .searchListIcon {
+      width: 24px;
+      height: 24px;
+    }
+  }
+
+  .container {
+    width: 100%;
+    padding: 1rem 0rem;
+  }
+
+  .gameListContainer {
+    display: flex;
+    gap: 3.3%;
+    flex-wrap: wrap;
+
+    .gameListContainerItem {
+      width: 31%;
+
+      img {
+        width: 100%;
+      }
+    }
+  }
 }

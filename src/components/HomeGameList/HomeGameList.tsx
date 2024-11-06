@@ -9,6 +9,7 @@ import DealerIcon from "src/assets/casino-dealer-illustration-2-svgrepo-com 1.sv
 import JackpotIcon from "src/assets/jackpots.svg?react";
 import { useHomePageState } from "src/contexts/HomePageContext";
 import { GameCategory } from "src/types/game";
+import GameSearch from "src/components/GameSearch";
 
 const HomeGameList: React.FC = () => {
   const {
@@ -17,7 +18,8 @@ const HomeGameList: React.FC = () => {
     isLoading,
     isSearching,
     setIsSearching,
-    filteredGames,
+    games,
+    setGames,
   } = useHomePageState();
 
   const categories = [
@@ -58,6 +60,7 @@ const HomeGameList: React.FC = () => {
   };
 
   const onSearchClick = () => {
+    setGames([]);
     setIsSearching(true);
   };
 
@@ -87,14 +90,14 @@ const HomeGameList: React.FC = () => {
 
       <div className={styles.container}>
         {isSearching ? (
-          <div>Game Search </div>
+          <GameSearch />
         ) : (
           <>
             {isLoading ? (
               <LoadingComponent />
             ) : (
               <div className={styles.gameListContainer}>
-                {filteredGames.map((game, index) => (
+                {games.map((game, index) => (
                   <div className={styles.gameListContainerItem} key={index}>
                     <img src={game.imgSrc} />
                   </div>

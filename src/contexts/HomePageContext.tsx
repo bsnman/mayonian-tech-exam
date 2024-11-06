@@ -2,24 +2,29 @@ import React, {
   createContext,
   useState,
   ReactNode,
-  useMemo,
   useContext,
   useEffect,
+  useCallback,
 } from "react";
 import { fetchGames } from "src/services/gameService";
 import { GameCategory, GameData } from "src/types/game";
+
+interface LoadGamesProps {
+  searchKey?: string;
+  category?: GameCategory;
+}
 
 interface HomePageState {
   isLoading: boolean;
   games: GameData[];
   isSearching: boolean;
   error: string | null;
-  filteredGames: GameData[];
   selectedCategory: GameCategory;
   setGames: (games: GameData[]) => void;
   setIsLoading: (loading: boolean) => void;
   setIsSearching: (loading: boolean) => void;
   setSelectedCategory: (category: GameCategory) => void;
+  loadGames: (props: LoadGamesProps) => Promise<void>;
 }
 
 const HomePageContext = createContext<HomePageState | undefined>(undefined);
@@ -34,29 +39,32 @@ export const HomePageProvider: React.FC<{ children: ReactNode }> = ({
   const [selectedCategory, setSelectedCategory] = useState<GameCategory>(
     GameCategory.START
   );
-  const filteredGames = useMemo(() => {
-    return games.filter((game) => {
-      return game.category === selectedCategory;
-    });
-  }, [games, selectedCategory]);
 
-  useEffect(() => {
-    const loadGames = async () => {
+  const loadGames = useCallback(
+    async ({ searchKey, category }: LoadGamesProps) => {
+      setIsLoading(true);
       try {
-        const gamesData = await fetchGames({ category: selectedCategory });
+        const gamesData = await fetchGames({
+          category: category,
+          searchKey: searchKey,
+        });
         setGames(gamesData as GameData[]);
       } catch {
         setError("Failed to fetch games");
       } finally {
         setIsLoading(false);
       }
-    };
+    },
+    []
+  );
 
-    setIsLoading(true);
-    loadGames().catch((err: unknown) => {
-      console.log("Unknown error occured", { err });
-    });
-  }, [selectedCategory]);
+  useEffect(() => {
+    if (!isSearching) {
+      loadGames({ category: selectedCategory }).catch((err: unknown) => {
+        console.log("Unknown error occured", { err });
+      });
+    }
+  }, [loadGames, isSearching, selectedCategory]);
 
   return (
     <HomePageContext.Provider
@@ -67,8 +75,8 @@ export const HomePageProvider: React.FC<{ children: ReactNode }> = ({
         setIsSearching,
         error,
         games,
+        loadGames,
         setGames,
-        filteredGames,
         selectedCategory,
         setSelectedCategory,
       }}

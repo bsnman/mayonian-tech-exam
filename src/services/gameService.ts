@@ -2,9 +2,10 @@ import { GameCategory, GameData } from "src/types/game";
 
 interface FetchGameProps {
   category?: GameCategory;
+  searchKey?: string;
 }
 
-export const fetchGames = async ({ category }: FetchGameProps) => {
+export const fetchGames = async ({ category, searchKey }: FetchGameProps) => {
   const games: GameData[] = [
     {
       name: "Sugar Rsuh",
@@ -73,7 +74,15 @@ export const fetchGames = async ({ category }: FetchGameProps) => {
     },
   ];
 
-  const filteredGames = games.filter((game) => game.category === category);
+  let filteredGames = games;
+  if (category) {
+    filteredGames = filteredGames.filter((game) => game.category === category);
+  }
+  if (searchKey) {
+    filteredGames = filteredGames.filter((game) =>
+      game.name.toLowerCase().includes(searchKey.toLowerCase())
+    );
+  }
 
   return await new Promise((resolve) => {
     setTimeout(() => {
